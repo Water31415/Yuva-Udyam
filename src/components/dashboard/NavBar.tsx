@@ -5,6 +5,41 @@ import { Bell, User, Search, Zap } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const navItems = [
+  { name: "Jobs", href: "./user/job" },
+  { name: "Dashboard", href: "./user/dashboard" },
+  { name: "Courses", href: "./user/courses" },
+];
+
+export default function NavbarLinks() {
+  const pathname = usePathname();
+
+  return (
+    <div className="hidden md:flex items-center gap-1">
+      {navItems.map((item) => {
+        const isActive = pathname === item.href;
+
+        return (
+          <Link
+            key={item.name}
+            href={item.href}
+            className={`text-sm font-bold px-4 py-2 rounded-lg transition-colors ${
+              isActive
+                ? "text-blue-500 bg-blue-500/10"
+                : "text-slate-500 hover:text-white"
+            }`}
+          >
+            {item.name}
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
 export function Navbar() {
   return (
     <div className="w-full pt-6 px-6">
@@ -21,19 +56,7 @@ export function Navbar() {
           </div>
 
           {/* Nav Links */}
-          <div className="hidden md:flex items-center gap-1">
-            {['Jobs', 'Dashboard', 'Courses'].map((item) => (
-              <Button 
-                key={item} 
-                variant="ghost" 
-                className={`text-sm font-bold px-4 hover:text-white transition-colors ${
-                  item === 'Jobs' ? 'text-blue-500 bg-blue-500/5' : 'text-slate-500'
-                }`}
-              >
-                {item}
-              </Button>
-            ))}
-          </div>
+            <NavbarLinks />
         </div>
 
         {/* Action Section */}

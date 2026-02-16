@@ -5,6 +5,13 @@ generator client {
 datasource db {
   provider = "postgresql"
 
+
+}
+
+
+enum Role {
+  USER
+  ORG
 }
 
 // 1. Existing Job model, expanded for better filtering
@@ -27,6 +34,7 @@ model User {
   email        String        @unique
   name         String?
   resumeUrl    String?       // For the "Rate My Resume" feature
+  role     String
   applications Application[] // Tracking all jobs the user applied to
 }
 
