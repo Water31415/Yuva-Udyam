@@ -7,14 +7,47 @@ datasource db {
 
 }
 
+// 1. Existing Job model, expanded for better filtering
 model Job {
-  id            String   @id @default(cuid())
-  role          String   
-  organization  String   
-  salary        String   
-  location      String   
-  deadline      String   
-  skills        String[] 
-  vacancies     String   
-  createdAt     DateTime @default(now())
+  id           String        @id @default(cuid())
+  role         String
+  organization String
+  salary       String
+  location     String
+  deadline     String
+  skills       String[]
+  status       String        @default("Active") // Active, Filled, Draft
+  applications Application[] // Relation to candidates who apply
+  createdAt    DateTime      @default(now())
+}
+
+// 2. User model to track candidates
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  name         String?
+  resumeUrl    String?       // For the "Rate My Resume" feature
+  applications Application[] // Tracking all jobs the user applied to
+}
+
+// 3. Application model to bridge Jobs and Users
+model Application {
+  id          String     @id @default(cuid())
+  jobId       String
+  userId      String
+  status      String     @default("Applied") // Applied, Selected, Rejected
+  job         Job        @relation(fields: [jobId], references: [id])
+  user        User       @relation(fields: [userId], references: [id])
+  interview   Interview? // One-to-one relation with the AI interview result
+  createdAt   DateTime   @default(now())
+}
+
+// 4. Interview model for AI Feedback
+model Interview {
+  id            String      @id @default(cuid())
+  applicationId String      @unique
+  score         Int         // AI generated score (0-100)
+  feedback      String      // Detailed AI analysis
+  transcript    String      // Store the voice-to-text conversation
+  application   Application @relation(fields: [applicationId], references: [id])
 }
