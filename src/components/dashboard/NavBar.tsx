@@ -9,9 +9,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
-  { name: "Jobs", href: "./user/job" },
-  { name: "Dashboard", href: "./user/dashboard" },
-  { name: "Courses", href: "./user/courses" },
+  { name: "Jobs", href: "/user/job" },
+  { name: "Dashboard", href: "/user/dashboard" },
+  { name: "Courses", href: "/user/courses" },
 ];
 
 export default function NavbarLinks() {
