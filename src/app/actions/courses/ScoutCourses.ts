@@ -54,8 +54,9 @@ export async function scoutCourses(userId: string) {
 
     const prompt = `
       The user has these skills: ${skills.join(", ")}.
-      Find 4 high-quality, free learning resources (YouTube playlists or official docs)
+      Find 4 high-quality, free **NPTEL courses**
       that would help them bridge gaps into advanced SaaS architecture.
+
 
       Return JSON:
       {
