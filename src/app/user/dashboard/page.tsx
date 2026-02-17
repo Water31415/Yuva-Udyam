@@ -10,6 +10,11 @@ import { UpcomingInterview } from '../../../components/dashboard/UpcomingIntervi
 import { ResumeScorer } from '../../../components/dashboard/ResumeScorer';
 import { Card, CardContent } from '@/components/ui/card';
 import { BrainCircuit, Trophy, Target } from 'lucide-react';
+import { scrapeGovtPortal } from '@/src/app/actions/jobs/Scraper';
+import { toast } from "sonner";
+import { RefreshCw } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { SyncButton } from '@/src/components/dashboard/SyncButton';
 
 export default function DashboardPage() {
   // In a hackathon, you can hardcode a 'test-user-id' that exists in your DB
@@ -18,16 +23,19 @@ export default function DashboardPage() {
     name: "Raj Singh"
   };
 
+
+
   return (
     <div className="min-h-screen bg-[#0B0E14] text-slate-300 font-sans selection:bg-blue-500/30">
       {/* 1. DETACHED NAVIGATION */}
-    
 
-      <main className="max-w-[1400px] mx-auto p-8 grid grid-cols-12 gap-10">
-        
+
+      <main className="max-w-[1400px] mx-auto px-6 py-6 grid grid-cols-12 gap-6">
+
         {/* LEFT COLUMN: Main Activity (9 Units) */}
-        <div className="col-span-12 lg:col-span-9 space-y-12">
-          
+        <div className="col-span-12 lg:col-span-9 space-y-8">
+
+
           {/* 2. IDENTITY SECTION */}
           <UserDetails name={MOCK_USER.name} id={MOCK_USER.id} />
 
@@ -41,20 +49,30 @@ export default function DashboardPage() {
 
           {/* 5. LIVE NATIONAL FEED (The Gemini PDF Extraction Component) */}
           <section className="space-y-6 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-               <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                 <Target className="w-6 h-6 text-blue-500" />
-                 National Job Feed
-               </h2>
-               <p className="text-xs text-slate-500 font-mono italic">Real-time DB Sync Active</p>
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-3">
+                <Target className="w-5 h-5 text-blue-500" />
+                <h2 className="text-xl font-semibold text-white">
+                  National Job Feed
+                </h2>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <SyncButton />
+                <p className="text-xs text-slate-500 font-mono">
+                  Real-time DB Sync Active
+                </p>
+              </div>
             </div>
+
             <JobFeed />
           </section>
         </div>
 
         {/* RIGHT COLUMN: AI Intelligence Sidebar (3 Units) */}
-        <div className="col-span-12 lg:col-span-3 space-y-8">
-          
+      <div className="col-span-12 lg:col-span-3 space-y-6">
+
+
           {/* 6. GOOGLE MEET & INTERVIEW COMPONENT */}
           <UpcomingInterview />
 
@@ -72,15 +90,15 @@ export default function DashboardPage() {
               </h3>
               <div className="space-y-2">
                 <p className="text-[10px] text-slate-400 leading-relaxed">
-                  Your average AI Interview score is <span className="text-white font-bold">78%</span>. 
-                  You are in the <span className="text-emerald-400 font-bold">top 15%</span> of candidates 
+                  Your average AI Interview score is <span className="text-white font-bold">78%</span>.
+                  You are in the <span className="text-emerald-400 font-bold">top 15%</span> of candidates
                   applying for Technical roles this week.
                 </p>
               </div>
               <div className="pt-2">
-                 <div className="w-full bg-slate-800 h-1 rounded-full">
-                    <div className="bg-blue-500 w-3/4 h-full shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
-                 </div>
+                <div className="w-full bg-slate-800 h-1 rounded-full">
+                  <div className="bg-blue-500 w-3/4 h-full shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -97,3 +115,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+
